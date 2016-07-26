@@ -1,0 +1,10 @@
+- git:
+    dest: "{{hunnor.apps.dir}}/server-admin"
+    repo: https://github.com/hunnor-dict/server-admin.git
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- apt:
+    name: nagios
+    state: present
+  sudo: yes

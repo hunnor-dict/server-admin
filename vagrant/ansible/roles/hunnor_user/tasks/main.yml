@@ -1,0 +1,4 @@
+- user:
+    name: "{{hunnor.user.name}}"
+    password: "{{hunnor.user.password}}"
+  sudo: yes

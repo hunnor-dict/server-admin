@@ -1,0 +1,21 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+	config.vm.box = "box-cutter/ubuntu1604"
+
+	config.vm.hostname = "hunnor"
+
+	config.vm.network "forwarded_port", guest: 8080, host: 8080
+	config.vm.network "forwarded_port", guest: 8983, host: 8983
+
+	config.vm.provider "virtualbox" do |vb|
+		vb.memory = 2048
+		vb.name = "HunNor"
+	end
+
+	config.vm.provision "ansible" do |ansible|
+		ansible.playbook = "ansible/playbook.yml"
+	end
+
+end

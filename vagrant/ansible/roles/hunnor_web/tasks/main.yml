@@ -1,0 +1,47 @@
+- git:
+    dest: "{{hunnor.apps.dir}}/web-spring"
+    repo: https://github.com/hunnor-dict/web-spring.git
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- command: chdir="{{hunnor.apps.dir}}/web-spring" creates="{{hunnor.apps.dir}}/web-spring/target/web-spring-{{hunnor.web.version}}.jar" mvn package
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- file:
+    group: "{{hunnor.user.group}}"
+    owner: "{{hunnor.user.name}}"
+    path: "{{hunnor.apps.dir}}/web-{{hunnor.web.version}}"
+    state: directory
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- command: creates="{{hunnor.apps.dir}}/web-{{hunnor.web.version}}/web-spring-{{hunnor.web.version}}.jar" cp {{hunnor.apps.dir}}/web-spring/target/web-spring-{{hunnor.web.version}}.jar {{hunnor.apps.dir}}/web-{{hunnor.web.version}}/web-spring-{{hunnor.web.version}}.jar
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- file:
+    group: "{{hunnor.user.group}}"
+    owner: "{{hunnor.user.name}}"
+    path: "{{hunnor.apps.dir}}/web-{{hunnor.web.version}}/logs"
+    state: directory
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- template:
+    src: application.properties.j2
+    dest: "{{hunnor.apps.dir}}/web-{{hunnor.web.version}}/application.properties"
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- template:
+    src: logback.xml.j2
+    dest: "{{hunnor.apps.dir}}/web-{{hunnor.web.version}}/logback.xml"
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- file:
+    path: /etc/init.d/hunnor-web
+    src: "{{hunnor.apps.dir}}/web-{{hunnor.web.version}}/web-spring-{{hunnor.web.version}}.jar"
+    state: link
+  sudo: yes

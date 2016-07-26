@@ -1,0 +1,4 @@
+- apt:
+    name: maven
+    state: present
+  sudo: yes
