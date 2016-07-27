@@ -5,6 +5,70 @@
   become_user: "{{hunnor.user.name}}"
 
 - apt:
-    name: nagios
+    name: nagios3
     state: present
+  sudo: yes
+
+- file:
+    path: /etc/nagios3/conf.d
+    state: absent
+  sudo: yes
+
+- file:
+    path: /etc/nagios3/conf.d
+    state: directory
+  sudo: yes
+
+- command: cp {{hunnor.apps.dir}}/server-admin/nagios/contacts.cfg /etc/nagios3/conf.d
+  sudo: yes
+
+- command: cp {{hunnor.apps.dir}}/server-admin/nagios/hunnor.cfg /etc/nagios3/conf.d
+  sudo: yes
+
+- command: cp {{hunnor.apps.dir}}/server-admin/nagios/localhost.cfg /etc/nagios3/conf.d
+  sudo: yes
+
+- command: cp {{hunnor.apps.dir}}/server-admin/nagios/timeperiods.cfg /etc/nagios3/conf.d
+  sudo: yes
+
+- command: htpasswd -b -c /etc/nagios3/htpasswd.users nagiosadmin nagiosadmin
+  sudo: yes
+
+- service:
+    name: nagios3
+    state: restarted
+  sudo: yes
+
+- apt:
+    name: mc
+    state: present
+  sudo: yes
+
+- apt:
+    name: cron-apt
+    state: present
+  sudo: yes
+
+- lineinfile:
+    dest: /etc/cron-apt/config
+    state: present
+    line: MAILON=upgrade
+  sudo: yes
+
+- lineinfile:
+    dest: /etc/cron-apt/config
+    state: present
+    line: MAILTO={{hunnor.user.email}}
+  sudo: yes
+
+- lineinfile:
+    dest: /etc/cron-apt/action.d/3-download
+    state: absent
+    line: dist-upgrade -d -y -o APT::Get::Show-Upgraded=true
+  sudo: yes
+
+- lineinfile:
+    dest: /etc/cron-apt/action.d/3-download
+    state: present
+    line: upgrade -d -y -o APT::Get::Show-Upgraded=true
   sudo: yes

@@ -2,3 +2,10 @@
     name: "{{hunnor.user.name}}"
     password: "{{hunnor.user.password}}"
   sudo: yes
+
+- file:
+    group: "{{hunnor.user.group}}"
+    owner: "{{hunnor.user.name}}"
+    path: "{{hunnor.apps.dir}}"
+    state: directory
+  sudo: yes
