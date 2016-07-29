@@ -5,7 +5,7 @@
 
 - get_url:
     dest: /tmp/solr-{{solr.version}}.tgz
-    url: ftp://apache.uib.no/pub/apache/lucene/solr/{{solr.version}}/solr-{{solr.version}}.tgz
+    url: http://apache.uib.no/lucene/solr/{{solr.version}}/solr-{{solr.version}}.tgz
   sudo: yes
 
 - file:
