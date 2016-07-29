@@ -1,13 +1,27 @@
-- git:
-    dest: "{{hunnor.apps.dir}}/server-admin"
-    repo: https://github.com/hunnor-dict/server-admin.git
-  become: yes
-  become_user: "{{hunnor.user.name}}"
+- debconf:
+    name: nagios3-cgi
+    question: nagios3/adminpassword
+    value: nagiosadmin
+    vtype: password
+  sudo: yes
+
+- debconf:
+    name: nagios3-cgi
+    question: nagios3/adminpassword-repeat
+    value: nagiosadmin
+    vtype: password
+  sudo: yes
 
 - apt:
     name: nagios3
     state: present
   sudo: yes
+
+- git:
+    dest: "{{hunnor.apps.dir}}/server-admin"
+    repo: https://github.com/hunnor-dict/server-admin.git
+  become: yes
+  become_user: "{{hunnor.user.name}}"
 
 - file:
     path: /etc/nagios3/conf.d
