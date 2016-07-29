@@ -1,0 +1,7 @@
+---
+dependencies:
+  - git
+  - mysql
+  - phpmyadmin
+  - ruby
+  - hunnor_user

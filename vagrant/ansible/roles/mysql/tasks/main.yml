@@ -1,0 +1,23 @@
+- debconf:
+    name: mysql-server-5.7
+    question: mysql-server/root_password
+    value: "{{mysql.root.password}}"
+    vtype: password
+  sudo: yes
+
+- debconf:
+    name: mysql-server-5.7
+    question: mysql-server/root_password_again
+    value: "{{mysql.root.password}}"
+    vtype: password
+  sudo: yes
+
+- apt:
+    name: mysql-server
+    state: present
+  sudo: yes
+
+- apt:
+    name: libmysqlclient-dev
+    state: present
+  sudo: yes

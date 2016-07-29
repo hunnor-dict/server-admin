@@ -1,5 +1,6 @@
 ---
 - hosts: default
   roles:
+    - hunnor_admin
     - hunnor_sysadmin
     - hunnor_web
