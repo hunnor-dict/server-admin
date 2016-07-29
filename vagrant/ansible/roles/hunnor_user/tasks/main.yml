@@ -1,6 +1,7 @@
 - user:
     name: "{{hunnor.user.name}}"
     password: "{{hunnor.user.password}}"
+    shell: /bin/bash
   sudo: yes
 
 - file:
