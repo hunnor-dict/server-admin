@@ -1,5 +1,6 @@
 ---
 dependencies:
+  - apache
   - git
   - mysql
   - phpmyadmin

@@ -1,0 +1,15 @@
+- get_url:
+    dest: /tmp/kindlegen_linux_2.6_i386_v2_9.tar.gz
+    url: http://kindlegen.s3.amazonaws.com/kindlegen_linux_2.6_i386_v2_9.tar.gz
+  sudo: yes
+
+- file:
+    path: /opt/kindlegen-2.9-amazon
+    state: directory
+  sudo: yes
+
+- unarchive:
+    copy: no
+    dest: /opt/kindlegen-2.9-amazon
+    src: /tmp/kindlegen_linux_2.6_i386_v2_9.tar.gz
+  sudo: yes

@@ -1,0 +1,6 @@
+---
+dependencies:
+  - kindlegen
+  - maven
+  - hunnor_admin
+  - hunnor_user

@@ -1,0 +1,49 @@
+- file:
+    group: "{{hunnor.user.group}}"
+    owner: "{{hunnor.user.name}}"
+    path: "{{hunnor.apps.dir}}/Dropbox"
+    state: directory
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- git:
+    dest: "{{hunnor.apps.dir}}/hunnor-export"
+    repo: https://github.com/hunnor-dict/hunnor-export.git
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- command: chdir="{{hunnor.apps.dir}}/hunnor-export/android" creates="{{hunnor.apps.dir}}/hunnor-export/android/target/hunnor-android-indexer-0.1.jar" mvn package
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- apt:
+    name: libxml2-utils
+    state: present
+  sudo: yes
+
+- apt:
+    name: stardict-tools
+    state: present
+  sudo: yes
+
+- apt:
+    name: libsaxonb-java
+    state: present
+  sudo: yes
+
+- apt:
+    name: fop
+    state: present
+  sudo: yes
+
+- apt:
+    name: zip
+    state: present
+  sudo: yes
+
+- template:
+    src: my.cnf.j2
+    dest: "/home/{{hunnor.user.name}}/.my.cnf"
+    mode: 0600
+  become: yes
+  become_user: "{{hunnor.user.name}}"

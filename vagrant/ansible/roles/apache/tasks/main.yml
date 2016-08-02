@@ -1,0 +1,35 @@
+- apt:
+    name: apache2
+    state: present
+  sudo: yes
+
+- lineinfile:
+    create: yes
+    dest: "/etc/apache2/conf-available/servername.conf"
+    state: present
+    line:  ServerName hunnor
+  sudo: yes
+
+- file:
+    path: /etc/apache2/conf-enabled/servername.conf
+    src: /etc/apache2/conf-available/servername.conf
+    state: link
+  sudo: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy.conf
+    src: /etc/apache2/mods-available/proxy.conf
+    state: link
+  sudo: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy.load
+    src: /etc/apache2/mods-available/proxy.load
+    state: link
+  sudo: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy_http.load
+    src: /etc/apache2/mods-available/proxy_http.load
+    state: link
+  sudo: yes

@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+	ServerAdmin sysadm@ovitas.no
+	DocumentRoot /srv/http
+	ServerName hunnor-dict.ovitas.no
+	ServerAlias hunnor-dict
+	ServerAlias dict.hunnor.net
+	ServerAlias szotar.hunnor.net
+	ServerAlias norveg-magyar-szotar.hunnor.net
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /srv/http/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Require all granted
+	</Directory>
+	ProxyPass / http://localhost:8080/
+	ProxyPassReverse / http://localhost:8080/
+	ErrorLog ${APACHE_LOG_DIR}/hunnor-dict.error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/hunnor-dict.access.log combined
+</VirtualHost>

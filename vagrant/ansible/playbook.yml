@@ -2,5 +2,7 @@
 - hosts: default
   roles:
     - hunnor_admin
+    - hunnor_apache
+    - hunnor_export
     - hunnor_sysadmin
     - hunnor_web
