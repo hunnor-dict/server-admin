@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  solr-cores:
+    image: hunnordict/solr-cores
+    volumes:
+      - $HUNNOR_XML_DUMP_DIR:/opt/hunnor-dict/repo/dump
+    ports:
+      - "8983:8983"
+
+  web-spring:
+    image: hunnordict/web-spring
+    depends_on:
+      - solr-cores
+    links:
+      - solr-cores:hunnor-solr
+    ports:
+      - "8080:8080"
