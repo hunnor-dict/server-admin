@@ -14,6 +14,7 @@ services:
     depends_on:
       - solr-cores
     links:
-      - solr-cores:hunnor-solr
+      - solr-cores:solr
     ports:
       - "8080:8080"
+    command: --net.hunnor.dict.search.solr.url=http://solr:8983/solr
