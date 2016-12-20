@@ -1,13 +1,13 @@
-version: '2'
+version: '2.1'
 
 services:
 
   solr-cores:
     image: hunnordict/solr-cores
     volumes:
-      - ${HUNNOR_XML_DUMP_DIR}:/opt/hunnor-dict/repo/dump
+      - ${HUNNOR_XML_DUMP_DIR:-/tmp}:/opt/hunnor-dict/repo/dump
     ports:
-      - "${HUNNOR_SOLR_PORT}:8983"
+      - "${HUNNOR_SOLR_PORT:-8983}:8983"
 
   web-spring:
     image: hunnordict/web-spring
@@ -16,5 +16,5 @@ services:
     links:
       - solr-cores:solr
     ports:
-      - "${HUNNOR_WEB_PORT}:8080"
+      - "${HUNNOR_WEB_PORT:-8080}:8080"
     command: --net.hunnor.dict.search.solr.url=http://solr:8983/solr
