@@ -12,7 +12,13 @@
   become: yes
   become_user: "{{hunnor.user.name}}"
 
-- command: chdir="{{hunnor.apps.dir}}/hunnor-export/android" creates="{{hunnor.apps.dir}}/hunnor-export/android/target/hunnor-android-indexer-0.1.jar" mvn package
+- git:
+    dest: "{{hunnor.apps.dir}}/export-lucene"
+    repo: https://github.com/hunnor-dict/export-lucene.git
+  become: yes
+  become_user: "{{hunnor.user.name}}"
+
+- command: chdir="{{hunnor.apps.dir}}/export-lucene" creates="{{hunnor.apps.dir}}/export-lucene/target/export-lucene-1.0.0.jar" mvn package
   become: yes
   become_user: "{{hunnor.user.name}}"
 
