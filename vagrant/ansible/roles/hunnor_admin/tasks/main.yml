@@ -25,8 +25,8 @@
   sudo: yes
 
 - git:
-    dest: "{{hunnor.apps.dir}}/hunnor-admin-rails"
-    repo: https://github.com/hunnor-dict/hunnor-admin-rails.git
+    dest: "{{hunnor.apps.dir}}/admin-rails"
+    repo: https://github.com/hunnor-dict/admin-rails.git
   become: yes
   become_user: "{{hunnor.user.name}}"
 
@@ -38,7 +38,7 @@
 - command: gem install bundler
   sudo: yes
 
-- command: chdir="{{hunnor.apps.dir}}/hunnor-admin-rails" bundle install
+- command: chdir="{{hunnor.apps.dir}}/admin-rails" bundle install
   sudo: yes
 
 - lineinfile:

@@ -1,13 +1,13 @@
 <VirtualHost *:80>
 	ServerAdmin sysadm@ovitas.no
-	DocumentRoot /opt/hunnor-dict/hunnor-admin-rails/public
+	DocumentRoot /opt/hunnor-dict/admin-rails/public
 	ServerName hunnor-dict-admin.ovitas.no
 	ServerAlias hunnor-dict-admin
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory /opt/hunnor-dict/hunnor-admin-rails/>
+	<Directory /opt/hunnor-dict/admin-rails/>
 		AllowOverride All
 		Options -MultiViews
 		Require all granted
