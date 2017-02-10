@@ -5,4 +5,4 @@ solr:
     group: solr
     name: solr
     password: $6$qNW5FpFcitGt1VN$8l77MemusbeEzooNwBDABcemi1pJG7aeeV7MpwuueX9WUO.66AcBLT8h6nD31RAR4y7woL3q.W7NGkZdguJfg.
-  version: 6.3.0
+  version: 6.4.1
