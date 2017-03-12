@@ -42,11 +42,6 @@
     state: present
   sudo: yes
 
-- apt:
-    name: zip
-    state: present
-  sudo: yes
-
 - template:
     src: my.cnf.j2
     dest: "/home/{{hunnor.user.name}}/.my.cnf"

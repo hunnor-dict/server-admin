@@ -1,0 +1,17 @@
+- get_url:
+    dest: /tmp/SaxonHE9-7-0-15J.zip
+    url: https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.7/SaxonHE9-7-0-15J.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fsaxon%2Ffiles%2FSaxon-HE%2F9.7%2F&ts=1489340120&use_mirror=netix
+
+- unarchive:
+    copy: no
+    src: /tmp/SaxonHE9-7-0-15J.zip
+    dest: /tmp
+
+- file:
+    path: /opt/saxon-9-he
+    state: directory
+  sudo: yes
+
+- command:
+    cp /tmp/saxon9he.jar /opt/saxon-9-he/saxon9he.jar
+  sudo: yes
