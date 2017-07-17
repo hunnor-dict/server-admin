@@ -56,3 +56,21 @@
     owner: "{{hunnor.user.name}}"
     path: "{{hunnor.apps.dir}}/repo/dump/HunNor-XML-NH.xml"
   sudo: yes
+
+- lineinfile:
+    dest: "/etc/default/hunnor-solr.in.sh"
+    state: present
+    line:  SOLR_OPTS="$SOLR_OPTS -Dhunnor.dump.dir={{hunnor.apps.dir}}/repo/dump"
+  sudo: yes
+
+- lineinfile:
+    dest: "/etc/default/hunnor-solr.in.sh"
+    state: present
+    line:  SOLR_OPTS="$SOLR_OPTS -Dhunnor.dump.file.hu=HunNor-XML-HN.xml"
+  sudo: yes
+
+- lineinfile:
+    dest: "/etc/default/hunnor-solr.in.sh"
+    state: present
+    line:  SOLR_OPTS="$SOLR_OPTS -Dhunnor.dump.file.nb=HunNor-XML-HN.xml"
+  sudo: yes
