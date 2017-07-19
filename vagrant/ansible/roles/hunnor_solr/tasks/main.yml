@@ -74,3 +74,10 @@
     state: present
     line:  SOLR_OPTS="$SOLR_OPTS -Dhunnor.dump.file.nb=HunNor-XML-HN.xml"
   sudo: yes
+
+- file:
+    group: "{{hunnor.user.group}}"
+    owner: "{{hunnor.user.name}}"
+    path: "/var/opt/solr/data"
+    state: directory
+  sudo: yes
