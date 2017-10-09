@@ -1,0 +1,23 @@
+- apt:
+    name: nfs-kernel-server
+    state: present
+  become: true
+
+- file:
+    path: /var/opt/nfs
+    group: nogroup
+    owner: nobody
+    state: directory
+  become: true
+
+- lineinfile:
+    create: yes
+    line: /var/opt/nfs *(rw,sync,no_subtree_check)
+    path: /etc/exports
+    state: present
+  become: true
+
+- service:
+    name: nfs-kernel-server
+    state: restarted
+  become: true

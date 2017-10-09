@@ -1,0 +1,21 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+	config.vm.box = "box-cutter/ubuntu1604"
+
+	config.vm.hostname = "rancher"
+
+	config.vm.network "public_network", :mac => "0800275E876B"
+
+	config.vm.provider "virtualbox" do |vb|
+		vb.cpus = 2
+		vb.memory = 8192
+		vb.name = "Rancher"
+	end
+
+	config.vm.provision "ansible" do |ansible|
+		ansible.playbook = "ansible/playbook.yml"
+	end
+
+end
