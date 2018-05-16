@@ -1,0 +1,45 @@
+<IfModule mod_ssl.c>
+
+    <VirtualHost *:443>
+
+        ServerName dict.hunnor.net
+
+        ServerAdmin {{hunnor_user_email}}
+
+        ErrorLog ${APACHE_LOG_DIR}/hunnor-dict.error.log
+        CustomLog ${APACHE_LOG_DIR}/hunnor-dict.access.log combined
+
+        SSLEngine On
+        SSLCertificateFile /etc/letsencrypt/live/dict.hunnor.net/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/dict.hunnor.net/privkey.pem
+
+        DocumentRoot /var/www/html
+
+        <Directory {{hunnor_directory_deploy}}/Public>
+            Require all granted
+        </Directory>
+
+        ProxyPass /databases !
+        Alias /databases {{hunnor_directory_deploy}}/Public/Databases
+
+        ProxyPass /exports !
+        Alias /exports {{hunnor_directory_deploy}}/Public/Exports
+
+        ProxyPass /port/lucene/hunnor-lucene-3.6.zip !
+        Alias /port/lucene/hunnor-lucene-3.6.zip {{hunnor_directory_deploy}}/Public/Databases/HunNor-Lucene.zip
+
+        ProxyPass /data/HunNor-SQLite.sqlite3 !
+        Alias /data/HunNor-SQLite.sqlite3 {{hunnor_directory_deploy}}/Public/Databases/HunNor-SQLite.sqlite3
+
+        ProxyPass /data/HunNor-SQLite.sqlite3.md5 !
+        Alias /data/HunNor-SQLite.sqlite3.md5 {{hunnor_directory_deploy}}/Public/Databases/HunNor-SQLite.sqlite3.md5
+
+        ProxyPass /grammar/verb http://localhost:8081/grammar/verb
+        ProxyPassReverse /grammar/verb http://localhost:8081/grammar/verb
+
+        ProxyPass / http://localhost:8080/
+        ProxyPassReverse / http://localhost:8080/
+
+    </VirtualHost>
+
+</IfModule>

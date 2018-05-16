@@ -1,0 +1,76 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: "{{hunnor_user_name}}"
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/web-spring"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/web-spring/config"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/web-spring/logs"
+    state: directory
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/web-spring/config"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: logback.xml
+  become: yes
+
+- template:
+    dest: "{{hunnor_directory_apps}}/web-spring/config/application.properties"
+    group: "{{hunnor_user_name}}"
+    owner: "{{hunnor_user_name}}"
+    src: application.properties.j2
+  become: yes
+
+- docker_container:
+    command: --spring.config.location=classpath:/application.properties,/config/application.properties
+    env:
+      TZ: Europe/Oslo
+    image: hunnordict/web-spring
+    name: web-spring
+    published_ports:
+      - 8080:8080
+    restart_policy: always
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_apps}}/web-spring/config:/config"
+      - "{{hunnor_directory_apps}}/web-spring/logs:/logs"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_network:
+    appends: yes
+    connected:
+      - web-spring
+    name: solr-net
+  become: yes
+  become_user: "{{hunnor_user_name}}"

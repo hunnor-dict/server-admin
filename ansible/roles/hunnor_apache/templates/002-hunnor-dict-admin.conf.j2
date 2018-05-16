@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+
+    ServerName hunnor-dict-admin.ovitas.no
+    ServerAlias hunnor-dict-admin
+
+    ServerAdmin {{hunnor_user_email}}
+
+    ErrorLog ${APACHE_LOG_DIR}/hunnor-dict-admin.error.log
+    CustomLog ${APACHE_LOG_DIR}/hunnor-dict-admin.access.log combined
+
+    ProxyPass / http://localhost:3000/
+    ProxyPassReverse / http://localhost:3000/
+
+</VirtualHost>

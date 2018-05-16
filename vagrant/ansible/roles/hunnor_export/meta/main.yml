@@ -1,8 +1,0 @@
----
-dependencies:
-  - kindlegen
-  - maven
-  - saxon
-  - zip
-  - hunnor_admin
-  - hunnor_user

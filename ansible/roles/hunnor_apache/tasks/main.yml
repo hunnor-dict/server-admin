@@ -1,0 +1,145 @@
+- apt:
+    name: apache2
+    state: present
+  become: yes
+
+- lineinfile:
+    create: yes
+    dest: "/etc/apache2/conf-available/servername.conf"
+    line:  ServerName hunnor
+    state: present
+  become: yes
+
+- file:
+    path: /etc/apache2/conf-enabled/servername.conf
+    src: /etc/apache2/conf-available/servername.conf
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy.conf
+    src: /etc/apache2/mods-available/proxy.conf
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy.load
+    src: /etc/apache2/mods-available/proxy.load
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/proxy_http.load
+    src: /etc/apache2/mods-available/proxy_http.load
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/rewrite.load
+    src: /etc/apache2/mods-available/rewrite.load
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/000-default.conf
+    src: 000-default.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/000-default.conf
+    src: /etc/apache2/sites-available/000-default.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/001-hunnor-dict.conf
+    src: 001-hunnor-dict.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/001-hunnor-dict.conf
+    src: /etc/apache2/sites-available/001-hunnor-dict.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/002-hunnor-dict-admin.conf
+    src: 002-hunnor-dict-admin.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/002-hunnor-dict-admin.conf
+    src: /etc/apache2/sites-available/002-hunnor-dict-admin.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/003-szotar.hunnor.net.conf
+    src: 003-szotar.hunnor.net.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/003-szotar.hunnor.net.conf
+    src: /etc/apache2/sites-available/003-szotar.hunnor.net.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/004-dict.hunnor.net.conf
+    src: 004-dict.hunnor.net.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/004-dict.hunnor.net.conf
+    src: /etc/apache2/sites-available/004-dict.hunnor.net.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/100-default-ssl.conf
+    src: 100-default-ssl.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/100-default-ssl.conf
+    src: /etc/apache2/sites-available/100-default-ssl.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
+    src: 101-hunnor-dict-ssl.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/101-hunnor-dict-ssl.conf
+    src: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
+    src: 103-szotar.hunnor.net-ssl.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/103-szotar.hunnor.net-ssl.conf
+    src: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
+    state: link
+  become: yes
+
+- template:
+    dest: /etc/apache2/sites-available/104-dict.hunnor.net-ssl.conf
+    src: 104-dict.hunnor.net-ssl.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/104-dict.hunnor.net-ssl.conf
+    src: /etc/apache2/sites-available/104-dict.hunnor.net-ssl.conf
+    state: link
+  become: yes
+
+- service:
+    name: apache2
+    state: restarted
+  become: yes

@@ -1,2 +1,0 @@
-- command: docker run --detach --restart=unless-stopped --publish 8080:8080 rancher/server:stable
-  become: yes

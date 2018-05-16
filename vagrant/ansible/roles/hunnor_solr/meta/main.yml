@@ -1,5 +1,0 @@
----
-dependencies:
-  - git
-  - hunnor_user
-  - { role: solr, solr: { dir: "{{hunnor.apps.dir}}", name: "hunnor-solr", user: { group: "{{hunnor.user.group}}", name: "{{hunnor.user.name}}", password: "{{hunnor.user.password}}" } } }

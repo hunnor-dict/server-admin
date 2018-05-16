@@ -1,0 +1,24 @@
+define contact {
+    name admin-template
+    service_notification_period 24x7
+    host_notification_period 24x7
+    service_notification_options w,u,c,r
+    host_notification_options d,u,r
+    service_notification_commands notify-service-by-email
+    host_notification_commands notify-host-by-email
+    register 0
+}
+
+define contact {
+    use admin-template
+    contact_name root
+    alias Root
+    email root@localhost
+}
+
+define contact {
+    use admin-template
+    contact_name {{hunnnr_sysadmin_name}}
+    alias {{hunnnr_sysadmin_name}}
+    email {{hunnor_sysadmin_email}}
+}

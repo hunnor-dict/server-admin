@@ -1,0 +1,41 @@
+- apt:
+    name: apt-transport-https
+    state: present
+  become: yes
+
+- apt:
+    name: ca-certificates
+    state: present
+  become: yes
+
+- apt:
+    name: curl
+    state: present
+  become: yes
+
+- apt:
+    name: software-properties-common
+    state: present
+  become: yes
+
+- apt_key:
+    state: present
+    url: https://download.docker.com/linux/ubuntu/gpg
+  become: yes
+
+- apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    state: present
+    update_cache: yes
+  become: yes
+
+- apt:
+    name: docker-ce
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: vagrant
+  become: yes

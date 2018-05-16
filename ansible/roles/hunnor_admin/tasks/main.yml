@@ -1,0 +1,146 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: "{{hunnor_user_name}}"
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/mysql"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/mysql/config"
+    state: directory
+  become: yes
+
+- template:
+    dest: "{{hunnor_directory_apps}}/mysql/config/mysql.env"
+    group: "{{hunnor_user_name}}"
+    owner: "{{hunnor_user_name}}"
+    src: mysql.env.j2
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/mysql/config"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: sql-mode.cnf
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/mysql/data"
+    state: directory
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/mysql/data"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: hunnor.sql
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-rails"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-rails/config"
+    state: directory
+  become: yes
+
+- template:
+    dest: "{{hunnor_directory_apps}}/admin-rails/config/admin.env"
+    group: "{{hunnor_user_name}}"
+    owner: "{{hunnor_user_name}}"
+    src: admin.env.j2
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-rails/logs"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-rails/tmp"
+    state: directory
+  become: yes
+
+- docker_container:
+    env:
+      TZ: Europe/Oslo
+    env_file: "{{hunnor_directory_apps}}/mysql/config/mysql.env"
+    image: mysql:5.7
+    name: mysql
+    published_ports:
+      - 3306:3306
+    restart_policy: always
+    volumes:
+      - "{{hunnor_directory_apps}}/mysql/config:/etc/mysql/conf.d"
+      - "{{hunnor_directory_apps}}/mysql/data:/docker-entrypoint-initdb.d"
+      - "{{hunnor_directory_data}}:/data"
+      - mysql-data:/var/lib/mysql
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_container:
+    env:
+      TZ: Europe/Oslo
+    image: adminer
+    links: mysql:db
+    name: adminer
+    published_ports:
+      - 8082:8080
+    restart_policy: always
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_container:
+    env_file: "{{hunnor_directory_apps}}/admin-rails/config/admin.env"
+    image: hunnordict/admin-rails
+    name: admin-rails
+    published_ports:
+      - 3000:3000
+    restart_policy: always
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_data}}:/data"
+      - "{{hunnor_directory_apps}}/admin-rails/logs:/opt/hunnor-dict/admin-rails/log"
+      - "{{hunnor_directory_apps}}/admin-rails/tmp:/opt/hunnor-dict/admin-rails/tmp"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_network:
+    connected:
+      - mysql
+      - admin-rails
+    name: mysql-net
+  become: yes
+  become_user: "{{hunnor_user_name}}"

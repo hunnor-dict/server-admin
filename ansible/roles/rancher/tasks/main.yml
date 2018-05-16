@@ -1,0 +1,6 @@
+- docker_container:
+    image: rancher/server:stable
+    restart_policy: unless-stopped
+    published_ports:
+      -8080:8080
+  become: yes

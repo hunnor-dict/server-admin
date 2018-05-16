@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+
+    ServerName hunnor-dict.ovitas.no
+
+    ServerSignature Off
+
+    RewriteEngine On
+    RewriteRule ^ http://dict.hunnor.net%{REQUEST_URI} [END,QSA,R=permanent]
+
+    ErrorLog ${APACHE_LOG_DIR}/redirect.error.log
+    LogLevel warn
+
+</VirtualHost>

@@ -1,2 +1,3 @@
-playbook.retry
-
+*.retry
+.vagrant
+*-console.log

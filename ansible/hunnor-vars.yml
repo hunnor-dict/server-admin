@@ -1,0 +1,38 @@
+hunnor_admin_facebook_key: fb_key
+hunnor_admin_facebook_secret: fb_secret
+hunnor_admin_linkedin_key: li_key
+hunnor_admin_linkedin_secret: li_secret
+
+hunnor_directory_apps: /opt/hunnor-dict/apps
+hunnor_directory_data: /opt/hunnor-dict/data
+hunnor_directory_deploy: /opt/hunnor-dict/deploy
+hunnor_directory_tools: /opt/hunnor-dict/tools
+
+hunnor_dump_hn: HunNor-XML-HN.xml
+hunnor_dump_nh: HunNor-XML-NH.xml
+
+hunnor_mysql_admin_password: root
+hunnor_mysql_database: hunnor
+hunnor_mysql_user_name: hunnor
+hunnor_mysql_user_password: hunnor
+
+hunnor_nagios_user_name: nagiosadmin
+hunnor_nagios_user_password: nagiosadmin
+
+hunnor_user_email: hunnor@localhost
+hunnor_user_group: hunnor
+hunnor_user_name: hunnor
+hunnor_user_password: $6$8xE.5CqjQ/$KnEjx/ySEs06U9bmXyPqecYhLYSxcBQPZyhLCR27kV3ptsqjD92LkdXfQZluxy5SSux0Vx6Fvp4zmDboo/I/9/ # hunnor
+
+hunnor_sysadmin_email: hunnor@localhost
+hunnnr_sysadmin_name: HunNor
+hunnor_sysadmin_user_name: hunnor
+
+hunnor_web_mail_from: hunnor@localhost
+hunnor_web_mail_reply_to: hunnor@localhost
+hunnor_web_mail_to: hunnor@localhost
+hunnor_web_smtp_server: localhost
+hunnor_web_smtp_user_name: hunnor
+hunnor_web_smtp_user_password: hunnor
+hunnor_web_recaptcha_key: rc_key
+hunnor_web_recaptcha_secret: rc_secret

@@ -1,4 +1,0 @@
-- apt:
-    name: ruby2.3-dev
-    state: present
-  sudo: yes

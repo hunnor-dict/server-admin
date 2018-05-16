@@ -1,0 +1,21 @@
+<IfModule mod_ssl.c>
+
+    <VirtualHost *:443>
+
+        ServerName szotar.hunnor.net
+
+        ServerSignature Off
+
+        RewriteEngine On
+        RewriteRule ^ https://dict.hunnor.net%{REQUEST_URI} [END,QSA,R=permanent]
+
+        ErrorLog ${APACHE_LOG_DIR}/redirect.error.log
+        LogLevel warn
+
+        SSLEngine On
+        SSLCertificateFile /etc/letsencrypt/live/szotar.hunnor.net/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/szotar.hunnor.net/privkey.pem
+
+    </VirtualHost>
+
+</IfModule>

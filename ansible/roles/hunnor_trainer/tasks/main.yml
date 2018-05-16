@@ -1,0 +1,21 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: "{{hunnor_user_name}}"
+  become: yes
+
+- docker_container:
+    env:
+      TZ: Europe/Oslo
+    image: hunnordict/word-trainer
+    name: word-trainer
+    published_ports:
+      - 8081:80
+    restart_policy: always
+  become: yes
+  become_user: "{{hunnor_user_name}}"

@@ -1,0 +1,40 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: "{{hunnor_user_name}}"
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_data}}"
+    state: directory
+  become: yes
+
+- docker_container:
+    env:
+      HUNNOR_DUMP_FILE_HU: "data/{{hunnor_dump_hn}}"
+      HUNNOR_DUMP_FILE_NB:  "data/{{hunnor_dump_nh}}"
+      TZ: Europe/Oslo
+    image: hunnordict/solr-cores
+    name: solr-cores
+    published_ports:
+      - 8983:8983
+    restart_policy: always
+    volumes:
+      - "{{hunnor_directory_data}}:/hunnor/data"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_network:
+    appends: yes
+    connected:
+      - solr-cores
+    name: solr-net
+  become: yes
+  become_user: "{{hunnor_user_name}}"

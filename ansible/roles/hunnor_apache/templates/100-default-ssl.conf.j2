@@ -1,0 +1,26 @@
+<IfModule mod_ssl.c>
+
+    <VirtualHost *:443>
+
+        ServerName hunnor.ovitas.no
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        SSLEngine On
+        SSLCertificateFile /etc/letsencrypt/live/hunnor.ovitas.no/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/hunnor.ovitas.no/privkey.pem
+
+        DocumentRoot /var/www/html
+
+        <FilesMatch "\.(cgi|shtml|phtml|php)$">
+            SSLOptions +StdEnvVars
+        </FilesMatch>
+
+        <Directory /usr/lib/cgi-bin>
+            SSLOptions +StdEnvVars
+        </Directory>
+
+    </VirtualHost>
+
+</IfModule>

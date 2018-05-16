@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+
+    ServerSignature Off
+
+    RewriteEngine On
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+
+    ErrorLog ${APACHE_LOG_DIR}/redirect.error.log
+    LogLevel warn
+
+</VirtualHost>

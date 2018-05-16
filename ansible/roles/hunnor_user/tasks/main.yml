@@ -1,0 +1,22 @@
+- group:
+    name: "{{hunnor_user_group}}"
+  become: yes
+
+- user:
+    group: "{{hunnor_user_group}}"
+    name: "{{hunnor_user_name}}"
+    password: "{{hunnor_user_password}}"
+    shell: /bin/bash
+  become: yes
+
+- command: id -g hunnor
+  register: hunnor_user_group_id_ret
+
+- set_fact:
+    hunnor_user_group_id: "{{hunnor_user_group_id_ret.stdout}}"
+
+- command: id -u hunnor
+  register: hunnor_user_id_ret
+
+- set_fact:
+    hunnor_user_id: "{{hunnor_user_id_ret.stdout}}"

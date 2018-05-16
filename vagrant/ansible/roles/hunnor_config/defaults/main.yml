@@ -1,8 +1,0 @@
-hunnor:
-  user:
-    group: hunnor
-    name: hunnor
-    password: $6$d7cluASQ6rDO$LmzkWBD1Cd2LbhtuYMXHzKHmB8SdHvWcHOp67OA0jj1EEDVaurUt5m5VQ4HRPLxVT0FYusb6seYPc0G8.7tR0/
-    email: hunnor@localhost
-  apps:
-    dir: /opt/hunnor-dict

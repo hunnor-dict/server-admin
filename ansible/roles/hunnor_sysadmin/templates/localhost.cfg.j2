@@ -1,0 +1,117 @@
+define host {
+    name host-template
+    notifications_enabled 1
+    event_handler_enabled 1
+    flap_detection_enabled 1
+    failure_prediction_enabled 1
+    process_perf_data 1
+    retain_status_information 1
+    retain_nonstatus_information 1
+    check_command check-host-alive
+    max_check_attempts 10
+    notification_interval 0
+    notification_period 24x7
+    notification_options d,u,r
+    contacts root
+    register 0
+}
+
+define host {
+    use host-template
+    host_name localhost
+    alias localhost
+    address 127.0.0.1
+}
+
+define command {
+    command_name check_local_time_vs_ntp
+    command_line $USER1$/check_ntp_time -H 0.ubuntu.pool.ntp.org '$ARG1$'
+}
+
+define service {
+    name service-template
+    active_checks_enabled 1
+    passive_checks_enabled 1
+    parallelize_check 1
+    obsess_over_service 1
+    check_freshness 0
+    notifications_enabled 1
+    event_handler_enabled 1
+    flap_detection_enabled 1
+    failure_prediction_enabled 1
+    process_perf_data 1
+    retain_status_information 1
+    retain_nonstatus_information 1
+    notification_interval 0
+    is_volatile 0
+    check_period 24x7
+    normal_check_interval 5
+    retry_check_interval 1
+    max_check_attempts 4
+    notification_period 24x7
+    notification_options w,u,c,r
+    contacts root
+    register 0
+}
+
+define service {
+    use service-template
+    host_name localhost
+    service_description Resources - Disk Space
+    check_command check_disk!20%!10%!/
+}
+
+define service {
+    use service-template
+    host_name localhost
+    service_description Resources - Current Users
+    check_command check_users!20!50
+}
+
+define service {
+    use service-template
+    host_name localhost
+    service_description Resources - Total Processes
+    check_command check_procs!250!400
+}
+
+define service {
+    use service-template
+    host_name localhost
+    service_description Resources - Current Load
+    check_command check_load!5.0!4.0!3.0!10.0!6.0!4.0
+}
+
+define service {
+    host_name localhost
+    service_description Server - SSH
+    check_command check_ssh
+    use service-template
+    notification_interval 0
+}
+
+define service {
+    host_name localhost
+    service_description Server - MySQL
+    check_command check_mysql_database!{{hunnor_mysql_user_name}}!{{hunnor_mysql_user_password}}!{{hunnor_mysql_database}}
+    use service-template
+    notification_interval 0
+}
+
+define service {
+    host_name localhost
+    service_description Server - Solr
+    check_command check_http!-p 8983
+    use service-template
+    notification_interval 0
+}
+
+define service {
+    host_name localhost
+    service_description Server - NTP
+    check_command check_local_time_vs_ntp
+    use service-template
+    notification_interval 0
+    normal_check_interval 1440
+    retry_check_interval 60
+}

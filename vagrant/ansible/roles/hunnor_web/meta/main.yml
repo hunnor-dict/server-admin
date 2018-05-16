@@ -1,5 +1,0 @@
----
-dependencies:
-  - maven
-  - hunnor_solr
-  - hunnor_user

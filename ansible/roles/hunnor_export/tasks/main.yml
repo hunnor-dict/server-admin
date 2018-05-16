@@ -1,0 +1,99 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
+- user:
+    append: yes
+    groups: docker
+    name: "{{hunnor_user_name}}"
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_data}}"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_deploy}}"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_deploy}}/Backup"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_deploy}}/Public"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_deploy}}/Public/Databases"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_deploy}}/Public/Exports"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_tools}}"
+    state: directory
+  become: yes
+
+- docker_container:
+    command: cp /opt/export-lucene/export-lucene-1.0.0.jar /tools/
+    image: hunnordict/export-lucene
+    name: export-lucene
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_tools}}:/tools"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_container:
+    command: cp /opt/export-sqlite/export-sqlite-1.0.0.jar /tools/
+    image: hunnordict/export-sqlite
+    name: export-sqlite
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_tools}}:/tools"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- docker_container:
+    command: -Dbuild.dir=/data export backup
+    env:
+      HUNNOR_ANT_DUMP_HU: "/data/{{hunnor_dump_hn}}"
+      HUNNOR_ANT_DUMP_NB: "/data/{{hunnor_dump_nh}}"
+      HUNNOR_ANT_LUCENE_JAR: /tools/export-lucene-1.0.0.jar
+      HUNNOR_ANT_SQLITE_JAR: /tools/export-sqlite-1.0.0.jar
+      HUNNOR_ANT_DEPLOY_DIR: /deploy
+      HUNNOR_ANT_KINDLE_COMPILER: /tools/kindlegen-2.9-amazon/kindlegen
+    image: hunnordict/export-ant
+    name: export-ant
+    state: present
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_data}}:/data"
+      - "{{hunnor_directory_deploy}}:/deploy"
+      - "{{hunnor_directory_tools}}:/tools"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
