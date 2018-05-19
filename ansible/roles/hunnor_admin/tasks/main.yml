@@ -144,3 +144,11 @@
     name: mysql-net
   become: yes
   become_user: "{{hunnor_user_name}}"
+
+- docker_network:
+    appends: yes
+    connected:
+      - admin-rails
+    name: solr-net
+  become: yes
+  become_user: "{{hunnor_user_name}}"
