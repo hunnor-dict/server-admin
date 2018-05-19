@@ -3,10 +3,10 @@
   vars_files:
     - hunnor-vars.yml
   roles:
-#    - hunnor_solr
+    - hunnor_solr
     - hunnor_admin
-#    - hunnor_apache
+    - hunnor_apache
     - hunnor_export
     - hunnor_sysadmin
-#    - hunnor_web
-#    - hunnor_trainer
+    - hunnor_web
+    - hunnor_trainer
