@@ -12,7 +12,7 @@ define host {
     notification_interval 0
     notification_period 24x7
     notification_options d,u,r
-    contacts root
+    contacts {{hunnor_sysadmin_user_name}}
     register 0
 }
 
@@ -50,7 +50,7 @@ define service {
     max_check_attempts 4
     notification_period 24x7
     notification_options w,u,c,r
-    contacts root
+    contacts {{hunnor_sysadmin_user_name}}
     register 0
 }
 

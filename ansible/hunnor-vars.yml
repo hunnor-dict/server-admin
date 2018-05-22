@@ -25,7 +25,7 @@ hunnor_user_name: hunnor
 hunnor_user_password: $6$8xE.5CqjQ/$KnEjx/ySEs06U9bmXyPqecYhLYSxcBQPZyhLCR27kV3ptsqjD92LkdXfQZluxy5SSux0Vx6Fvp4zmDboo/I/9/ # hunnor
 
 hunnor_sysadmin_email: hunnor@localhost
-hunnnr_sysadmin_name: HunNor
+hunnor_sysadmin_name: HunNor
 hunnor_sysadmin_user_name: hunnor
 
 hunnor_web_mail_from: hunnor@localhost
