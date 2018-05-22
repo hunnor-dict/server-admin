@@ -23,7 +23,7 @@
 
 - lineinfile:
     dest: /etc/cron-apt/config
-    line: MAILTO={{hunnor_user_email}}
+    line: MAILTO={{hunnor_sysadmin_email}}
     state: present
   become: yes
 
