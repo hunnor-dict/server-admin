@@ -157,7 +157,7 @@
     state: link
   become: yes
 
-- service:
-    name: apache2
-    state: restarted
-  become: yes
+#- service:
+#    name: apache2
+#    state: restarted
+#  become: yes
