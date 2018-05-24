@@ -129,6 +129,12 @@
   become: yes
   become_user: "{{hunnor_user_name}}"
 
+- file:
+    path: /home/{{hunnor_user_name}}/crontab
+    state: absent
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
 - copy:
     dest: /home/{{hunnor_user_name}}/
     group: "{{hunnor_user_name}}"
