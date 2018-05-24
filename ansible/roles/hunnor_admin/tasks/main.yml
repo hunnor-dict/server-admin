@@ -160,3 +160,21 @@
     owner: "{{hunnor_user_name}}"
     src: docker-update-admin-rails.sh.j2
   become: yes
+
+- template:
+    dest: /home/{{hunnor_user_name}}//my.cnf
+    group: "{{hunnor_user_name}}"
+    mode: 0600
+    owner: "{{hunnor_user_name}}"
+    src: my.cnf.j2
+  become: yes
+
+- command: docker cp /home/{{hunnor_user_name}}/my.cnf mysql:/root/.my.cnf
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
+- file:
+    path: /home/{{hunnor_user_name}}/my.cnf
+    state: absent
+  become: yes
+  become_user: "{{hunnor_user_name}}"
