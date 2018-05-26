@@ -5,7 +5,7 @@
 
 - lineinfile:
     create: yes
-    dest: "/etc/apache2/conf-available/servername.conf"
+    dest: /etc/apache2/conf-available/servername.conf
     line:  ServerName hunnor
     state: present
   become: yes
@@ -56,6 +56,50 @@
     path: /etc/apache2/mods-enabled/socache_shmcb.load
     src: /etc/apache2/mods-available/socache_shmcb.load
     state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/php7.2.conf
+    state: absent
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/php7.2.load
+    state: absent
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/mpm_prefork.conf
+    state: absent
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/mpm_prefork.load
+    state: absent
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/mpm_event.conf
+    src: /etc/apache2/mods-available/mpm_event.conf
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/mpm_event.load
+    src: /etc/apache2/mods-available/mpm_event.load
+    state: link
+  become: yes
+
+- file:
+    path: /etc/apache2/mods-enabled/http2.load
+    src: /etc/apache2/mods-available/http2.load
+    state: link
+  become: yes
+
+- lineinfile:
+    dest: /etc/apache2/apache2.conf
+    line:  Protocols h2 http/1.1
+    state: present
   become: yes
 
 - template:

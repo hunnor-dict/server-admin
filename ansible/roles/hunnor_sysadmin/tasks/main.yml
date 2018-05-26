@@ -86,6 +86,26 @@
 - command: "htpasswd -b -c /etc/nagios3/htpasswd.users {{hunnor_nagios_user_name}} {{hunnor_nagios_user_password}}" 
   become: yes
 
+- apt:
+    name: php-fpm
+    state: present
+  become: yes
+
+- command: "a2dismod php7.2"
+  become: yes
+
+- command: "a2enmod proxy_fcgi setenvif"
+  become: yes
+
+- command: "a2enconf php7.2-fpm"
+  become: yes
+
+- command: "a2dismod mpm_prefork"
+  become: yes
+
+- command: "a2enmod mpm_event"
+  become: yes
+
 - service:
     name: nagios3
     state: restarted
