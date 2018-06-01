@@ -1,0 +1,10 @@
+#!/bin/bash
+
+docker stop solr-cores
+docker rm solr-cores
+
+docker pull hunnordict/solr-cores
+
+docker run --detach --env HUNNOR_DUMP_FILE_HU=data/HunNor-XML-HN.xml --env HUNNOR_DUMP_FILE_NB=data/HunNor-XML-NH.xml --env TZ=Europe/Oslo --name solr-cores --publish 8983:8983 --restart always --volume {{hunnor_directory_data}}:/hunnor/data hunnordict/solr-cores
+
+docker network connect solr-net solr-cores

@@ -38,3 +38,11 @@
     name: solr-net
   become: yes
   become_user: "{{hunnor_user_name}}"
+
+- template:
+    dest: "/home/{{hunnor_user_name}}/docker-update-solr-cores.sh"
+    group: "{{hunnor_user_name}}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{hunnor_user_name}}"
+    src: docker-update-solr-cores.sh.j2
+  become: yes
