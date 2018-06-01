@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker rm export-sqlite
+
+docker pull hunnordict/export-sqlite
+
+docker run --name export-sqlite --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_tools}}:/tools hunnordict/export-sqlite cp /opt/export-sqlite/export-sqlite-1.0.0.jar /tools/
