@@ -19,3 +19,11 @@
     restart_policy: always
   become: yes
   become_user: "{{hunnor_user_name}}"
+
+- copy:
+    dest: /home/{{hunnor_user_name}}/
+    group: "{{hunnor_user_group}}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{hunnor_user_name}}"
+    src: docker-update-word-trainer.sh
+  become: yes
