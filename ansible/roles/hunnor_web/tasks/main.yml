@@ -51,6 +51,10 @@
     src: application.properties.j2
   become: yes
 
+- command: iconv --from-code=UTF-8 --to-code=ISO8859-1 --output={{hunnor_directory_apps}}/web-spring/config/application.properties {{hunnor_directory_apps}}/web-spring/config/application.properties
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
 - docker_container:
     command: --spring.config.location=classpath:/application.properties,/config/application.properties
     env:
