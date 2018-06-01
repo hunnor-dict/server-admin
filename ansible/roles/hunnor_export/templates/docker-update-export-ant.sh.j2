@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker rm export-ant
+
+docker pull hunnordict/export-ant
+
+docker run --env HUNNOR_ANT_DUMP_HU=/data/{{hunnor_dump_hn}} --env HUNNOR_ANT_DUMP_NB=/data/{{hunnor_dump_nh}} --env HUNNOR_ANT_LUCENE_JAR=/tools/export-lucene-1.0.0.jar --env HUNNOR_ANT_SQLITE_JAR=/tools/export-sqlite-1.0.0.jar --env HUNNOR_ANT_DEPLOY_DIR=/deploy --env HUNNOR_ANT_KINDLE_COMPILER=/tools/kindlegen-2.9-amazon/kindlegen --name export-ant --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_data}}:/data --volume {{hunnor_directory_deploy}}:/deploy --volume {{hunnor_directory_tools}}:/tools hunnordict/export-ant -Dbuild.dir=/data export backup
