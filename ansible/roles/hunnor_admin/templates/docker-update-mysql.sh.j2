@@ -1,0 +1,13 @@
+#!/bin/bash
+
+docker stop mysql
+docker rm mysql
+
+docker pull mysql:5.7
+
+# Skip volume for /docker-entrypoint-initdb.d
+#   since the named volume already has the data
+
+docker run --env TZ=Europe/Oslo --env-file {{hunnor_directory_apps}}/mysql/config/mysql.env --name mysql --publish 3306:3306 --restart always --volume {{hunnor_directory_apps}}/mysql/config:/etc/mysql/conf.d --volume {{hunnor_directory_data}}:/data --volume mysql-data:/var/lib/mysql mysql:5.7
+
+docker network connect mysql-net mysql
