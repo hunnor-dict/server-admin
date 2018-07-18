@@ -1,6 +1,13 @@
+- apt:
+    name: python3-docker
+    state: present
+  become: yes
+
 - docker_container:
-    image: rancher/server:stable
+    image: rancher/rancher:stable
+    name: rancher
     restart_policy: unless-stopped
     published_ports:
-      -8080:8080
+      - 80:80
+      - 443:443
   become: yes

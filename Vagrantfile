@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			vb.name = "HunNor"
 		end
 		hunnor.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "ansible/hunnor.yml"
 			ansible.extra_vars = {
 				ansible_python_interpreter: "/usr/bin/python3"
@@ -34,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			vb.name = "Rancher"
 		end
 		rancher.vm.provision "ansible" do |ansible|
+			ansible.compatibility_mode = "2.0"
 			ansible.playbook = "ansible/rancher.yml"
 			ansible.extra_vars = {
 				ansible_python_interpreter: "/usr/bin/python3"
