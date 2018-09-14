@@ -180,6 +180,17 @@
   become: yes
 
 - template:
+    dest: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
+    src: 102-hunnor-dict-admin-ssl.conf.j2
+  become: yes
+
+- file:
+    dest: /etc/apache2/sites-enabled/102-hunnor-dict-admin-ssl.conf
+    src: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
+    state: link
+  become: yes
+
+- template:
     dest: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
     src: 103-szotar.hunnor.net-ssl.conf.j2
   become: yes
