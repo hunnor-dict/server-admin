@@ -79,14 +79,9 @@
   become_user: "{{hunnor_user_name}}"
 
 - docker_container:
-    command: -Dbuild.dir=/data export backup
+    command: -Dbuild.dir=/data -lib /tools/export-lucene-1.0.0.jar export backup
     env:
-      HUNNOR_ANT_DUMP_HU: "/data/{{hunnor_dump_hn}}"
-      HUNNOR_ANT_DUMP_NB: "/data/{{hunnor_dump_nh}}"
-      HUNNOR_ANT_LUCENE_JAR: /tools/export-lucene-1.0.0.jar
-      HUNNOR_ANT_SQLITE_JAR: /tools/export-sqlite-1.0.0.jar
-      HUNNOR_ANT_DEPLOY_DIR: /deploy
-      HUNNOR_ANT_KINDLE_COMPILER: /tools/kindlegen-2.9-amazon/kindlegen
+      HUNNOR_ANT_SQLITE_JDBC_JAR: /tools/sqlite-jdbc-3.23.1.jar
     image: hunnordict/export-ant
     name: export-ant
     state: present
