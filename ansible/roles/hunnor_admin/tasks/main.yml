@@ -55,7 +55,35 @@
     dest: "{{hunnor_directory_apps}}/mysql/data"
     group: "{{hunnor_user_group}}"
     owner: "{{hunnor_user_name}}"
-    src: hunnor.sql
+    src: grant.file.sql
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/mysql/data"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: hunnor.v2.create.sql
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/mysql/data"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: hunnor.v3.create.sql
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/mysql/data"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: ordbank.create.sql
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_data}}"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: ordbank.import.sql
   become: yes
 
 - file:
@@ -90,6 +118,41 @@
     group: "{{hunnor_user_group}}"
     owner: "{{hunnor_user_name}}"
     path: "{{hunnor_directory_apps}}/admin-rails/tmp"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-spring"
+    state: directory
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-spring/config"
+    state: directory
+  become: yes
+
+- copy:
+    dest: "{{hunnor_directory_apps}}/admin-spring/config"
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    src: logback.xml
+  become: yes
+
+- template:
+    dest: "{{hunnor_directory_apps}}/admin-spring/config/application.properties"
+    group: "{{hunnor_user_name}}"
+    owner: "{{hunnor_user_name}}"
+    src: application.properties.j2
+  become: yes
+
+- file:
+    group: "{{hunnor_user_group}}"
+    owner: "{{hunnor_user_name}}"
+    path: "{{hunnor_directory_apps}}/admin-spring/logs"
     state: directory
   become: yes
 
@@ -137,10 +200,27 @@
   become: yes
   become_user: "{{hunnor_user_name}}"
 
+- docker_container:
+    command: "--spring.config.location=classpath:/application.properties,/config/application.properties"
+    env:
+      TZ: Europe/Oslo
+    image: hunnordict/admin-spring
+    name: admin-spring
+    published_ports:
+      - 8083:8080
+    restart_policy: always
+    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
+    volumes:
+      - "{{hunnor_directory_apps}}/admin-spring/config:/config"
+      - "{{hunnor_directory_apps}}/admin-spring/logs:/logs"
+  become: yes
+  become_user: "{{hunnor_user_name}}"
+
 - docker_network:
     connected:
       - mysql
       - admin-rails
+      - admin-spring
     name: mysql-net
   become: yes
   become_user: "{{hunnor_user_name}}"
@@ -170,6 +250,14 @@
   become: yes
 
 - template:
+    dest: "/home/{{hunnor_user_name}}/docker-update-admin-spring.sh"
+    group: "{{hunnor_user_name}}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{hunnor_user_name}}"
+    src: docker-update-admin-spring.sh.j2
+  become: yes
+
+- template:
     dest: "/home/{{hunnor_user_name}}/docker-update-adminer.sh"
     group: "{{hunnor_user_name}}"
     mode: u=rwx,g=rx,o=rx
@@ -178,7 +266,7 @@
   become: yes
 
 - template:
-    dest: /home/{{hunnor_user_name}}//my.cnf
+    dest: /home/{{hunnor_user_name}}/my.cnf
     group: "{{hunnor_user_name}}"
     mode: 0600
     owner: "{{hunnor_user_name}}"

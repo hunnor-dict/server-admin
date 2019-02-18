@@ -1,0 +1,10 @@
+#!/bin/bash
+
+docker stop admin-spring
+docker rm admin-spring
+
+docker pull hunnordict/admin-spring
+
+docker run --env TZ=Europe/Oslo --name admin-spring --publish 8083:8080 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_apps}}/admin-spring/config:/config --volume {{hunnor_directory_apps}}/admin-spring/logs:/logs hunnordict/admin-spring --spring.config.location=classpath:/application.properties,/config/application.properties
+
+docker network connect mysql-net admin-spring
