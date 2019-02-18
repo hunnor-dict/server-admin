@@ -4,6 +4,7 @@
 
 - user:
     group: "{{hunnor_user_group}}"
+    groups: sudo
     name: "{{hunnor_user_name}}"
     password: "{{hunnor_user_password}}"
     shell: /bin/bash
