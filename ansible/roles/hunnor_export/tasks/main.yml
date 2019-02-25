@@ -69,16 +69,6 @@
   become_user: "{{hunnor_user_name}}"
 
 - docker_container:
-    command: cp /opt/export-sqlite/export-sqlite-1.0.0.jar /tools/
-    image: hunnordict/export-sqlite
-    name: export-sqlite
-    user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
-    volumes:
-      - "{{hunnor_directory_tools}}:/tools"
-  become: yes
-  become_user: "{{hunnor_user_name}}"
-
-- docker_container:
     command: -Dbuild.dir=/data -lib /tools/export-lucene-1.0.0.jar export backup
     env:
       HUNNOR_ANT_SQLITE_JDBC_JAR: /tools/sqlite-jdbc-3.23.1.jar
@@ -99,14 +89,6 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{hunnor_user_name}}"
     src: docker-update-export-lucene.sh.j2
-  become: yes
-
-- template:
-    dest: "/home/{{hunnor_user_name}}/docker-update-export-sqlite.sh"
-    group: "{{hunnor_user_name}}"
-    mode: u=rwx,g=rx,o=rx
-    owner: "{{hunnor_user_name}}"
-    src: docker-update-export-sqlite.sh.j2
   become: yes
 
 - template:
