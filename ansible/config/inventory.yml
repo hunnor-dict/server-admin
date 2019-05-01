@@ -1,0 +1,7 @@
+production:
+  hosts:
+    hunnor:
+      ansible_host: 192.168.x.y
+  vars:
+    ansible_user: alice
+    ansible_python_interpreter: /usr/bin/python3
