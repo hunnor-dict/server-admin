@@ -71,7 +71,7 @@
 - docker_container:
     command: -Dbuild.dir=/data -lib /tools/export-lucene-1.0.0.jar export backup
     env:
-      HUNNOR_ANT_SQLITE_JDBC_JAR: /tools/sqlite-jdbc-3.23.1.jar
+      TZ: Europe/Oslo
     image: hunnordict/export-ant
     name: export-ant
     state: present
