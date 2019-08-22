@@ -1,8 +1,17 @@
 #!/bin/bash
 
-docker stop adminer
-docker rm adminer
+before=$(docker images -q adminer)
 
 docker pull adminer
+
+after=$(docker images -q adminer)
+
+if [ "$before" == "$after" ]; then
+	echo "Image up to date"
+	exit 0
+fi
+
+docker stop adminer
+docker rm adminer
 
 docker run --env TZ=Europe/Oslo --name adminer --publish 8082:8080 --restart always --detach --link mysql:db adminer

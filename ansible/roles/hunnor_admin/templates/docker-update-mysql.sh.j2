@@ -1,9 +1,18 @@
 #!/bin/bash
 
-docker stop mysql
-docker rm mysql
+before=$(docker images -q mysql:5.7)
 
 docker pull mysql:5.7
+
+after=$(docker images -q mysql:5.7)
+
+if [ "$before" == "$after" ]; then
+	echo "Image up to date"
+	exit 0
+fi
+
+docker stop mysql
+docker rm mysql
 
 # Skip volume for /docker-entrypoint-initdb.d
 #   since the named volume already has the data

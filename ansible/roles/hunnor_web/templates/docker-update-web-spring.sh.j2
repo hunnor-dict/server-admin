@@ -1,9 +1,18 @@
 #!/bin/bash
 
-docker stop web-spring
-docker rm web-spring
+before=$(docker images -q hunnordict/web-spring)
 
 docker pull hunnordict/web-spring
+
+after=$(docker images -q hunnordict/web-spring)
+
+if [ "$before" == "$after" ]; then
+	echo "Image up to date"
+	exit 0
+fi
+
+docker stop web-spring
+docker rm web-spring
 
 docker run --env TZ=Europe/Oslo --name web-spring --publish 8080:8080 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_apps}}/web-spring/config:/config --volume {{hunnor_directory_apps}}/web-spring/logs:/logs hunnordict/web-spring --spring.config.location=classpath:/application.properties,/config/application.properties
 

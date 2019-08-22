@@ -1,7 +1,16 @@
 #!/bin/bash
 
-docker rm export-lucene
+before=$(docker images -q hunnordict/export-lucene)
 
 docker pull hunnordict/export-lucene
+
+after=$(docker images -q hunnordict/export-lucene)
+
+if [ "$before" == "$after" ]; then
+	echo "Image up to date"
+	exit 0
+fi
+
+docker rm export-lucene
 
 docker run --name export-lucene --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_tools}}:/tools hunnordict/export-lucene cp /opt/export-lucene/export-lucene-1.0.0.jar /tools/

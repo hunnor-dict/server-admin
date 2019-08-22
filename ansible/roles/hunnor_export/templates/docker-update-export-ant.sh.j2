@@ -1,7 +1,16 @@
 #!/bin/bash
 
-docker rm export-ant
+before=$(docker images -q hunnordict/export-ant)
 
 docker pull hunnordict/export-ant
+
+after=$(docker images -q hunnordict/export-ant)
+
+if [ "$before" == "$after" ]; then
+	echo "Image up to date"
+	exit 0
+fi
+
+docker rm export-ant
 
 docker run --env TZ=Europe/Oslo --name export-ant --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_data}}:/data --volume {{hunnor_directory_deploy}}:/deploy --volume {{hunnor_directory_tools}}:/tools hunnordict/export-ant -Dbuild.dir=/data -lib /tools/export-lucene-1.0.0.jar export backup
