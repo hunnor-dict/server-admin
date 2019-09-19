@@ -162,57 +162,57 @@
     src: 100-default-ssl.conf.j2
   become: yes
 
-- file:
-    dest: /etc/apache2/sites-enabled/100-default-ssl.conf
-    src: /etc/apache2/sites-available/100-default-ssl.conf
-    state: link
-  become: yes
+#- file:
+#    dest: /etc/apache2/sites-enabled/100-default-ssl.conf
+#    src: /etc/apache2/sites-available/100-default-ssl.conf
+#    state: link
+#  become: yes
 
 - template:
     dest: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
     src: 101-hunnor-dict-ssl.conf.j2
   become: yes
 
-- file:
-    dest: /etc/apache2/sites-enabled/101-hunnor-dict-ssl.conf
-    src: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
-    state: link
-  become: yes
+#- file:
+#    dest: /etc/apache2/sites-enabled/101-hunnor-dict-ssl.conf
+#    src: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
+#    state: link
+#  become: yes
 
 - template:
     dest: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
     src: 102-hunnor-dict-admin-ssl.conf.j2
   become: yes
 
-- file:
-    dest: /etc/apache2/sites-enabled/102-hunnor-dict-admin-ssl.conf
-    src: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
-    state: link
-  become: yes
+#- file:
+#    dest: /etc/apache2/sites-enabled/102-hunnor-dict-admin-ssl.conf
+#    src: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
+#    state: link
+#  become: yes
 
 - template:
     dest: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
     src: 103-szotar.hunnor.net-ssl.conf.j2
   become: yes
 
-- file:
-    dest: /etc/apache2/sites-enabled/103-szotar.hunnor.net-ssl.conf
-    src: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
-    state: link
-  become: yes
+#- file:
+#    dest: /etc/apache2/sites-enabled/103-szotar.hunnor.net-ssl.conf
+#    src: /etc/apache2/sites-available/103-szotar.hunnor.net-ssl.conf
+#    state: link
+#  become: yes
 
 - template:
     dest: /etc/apache2/sites-available/104-dict.hunnor.net-ssl.conf
     src: 104-dict.hunnor.net-ssl.conf.j2
   become: yes
 
-- file:
-    dest: /etc/apache2/sites-enabled/104-dict.hunnor.net-ssl.conf
-    src: /etc/apache2/sites-available/104-dict.hunnor.net-ssl.conf
-    state: link
-  become: yes
-
-#- service:
-#    name: apache2
-#    state: restarted
+#- file:
+#    dest: /etc/apache2/sites-enabled/104-dict.hunnor.net-ssl.conf
+#    src: /etc/apache2/sites-available/104-dict.hunnor.net-ssl.conf
+#    state: link
 #  become: yes
+
+- service:
+    name: apache2
+    state: restarted
+  become: yes
