@@ -163,7 +163,7 @@
     image: mysql:5.7
     name: mysql
     published_ports:
-      - 3306:3306
+      - 127.0.0.1:3306:3306
     restart_policy: always
     volumes:
       - "{{hunnor_directory_apps}}/mysql/config:/etc/mysql/conf.d"
@@ -180,7 +180,7 @@
     links: mysql:db
     name: adminer
     published_ports:
-      - 8082:8080
+      - 127.0.0.1:8082:8080
     restart_policy: always
   become: yes
   become_user: "{{hunnor_user_name}}"
@@ -192,7 +192,7 @@
     image: hunnordict/admin-rails
     name: admin-rails
     published_ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
     restart_policy: always
     user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
     volumes:
@@ -209,7 +209,7 @@
     image: hunnordict/admin-spring
     name: admin-spring
     published_ports:
-      - 8083:8080
+      - 127.0.0.1:8083:8080
     restart_policy: always
     user: "{{hunnor_user_id}}:{{hunnor_user_group_id}}"
     volumes:

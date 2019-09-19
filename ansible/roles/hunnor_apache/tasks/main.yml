@@ -17,6 +17,12 @@
   become: yes
 
 - file:
+    path: /etc/apache2/mods-enabled/headers.load
+    src: /etc/apache2/mods-available/headers.load
+    state: link
+  become: yes
+
+- file:
     path: /etc/apache2/mods-enabled/proxy.conf
     src: /etc/apache2/mods-available/proxy.conf
     state: link

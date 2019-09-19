@@ -14,6 +14,6 @@ fi
 docker stop web-spring
 docker rm web-spring
 
-docker run --env TZ=Europe/Oslo --name web-spring --publish 8080:8080 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_apps}}/web-spring/config:/config --volume {{hunnor_directory_apps}}/web-spring/logs:/logs hunnordict/web-spring --spring.config.location=classpath:/application.properties,/config/application.properties
+docker run --env TZ=Europe/Oslo --name web-spring --publish 127.0.0.1:8080:8080 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_apps}}/web-spring/config:/config --volume {{hunnor_directory_apps}}/web-spring/logs:/logs hunnordict/web-spring --spring.config.location=classpath:/application.properties,/config/application.properties
 
 docker network connect solr-net web-spring

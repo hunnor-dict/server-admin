@@ -24,7 +24,7 @@
     image: hunnordict/solr-cores
     name: solr-cores
     published_ports:
-      - 8983:8983
+      - 127.0.0.1:8983:8983
     restart_policy: always
     volumes:
       - "{{hunnor_directory_data}}:/hunnor/data"

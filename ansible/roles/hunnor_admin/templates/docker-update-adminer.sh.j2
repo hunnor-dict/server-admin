@@ -14,4 +14,4 @@ fi
 docker stop adminer
 docker rm adminer
 
-docker run --env TZ=Europe/Oslo --name adminer --publish 8082:8080 --restart always --detach --link mysql:db adminer
+docker run --env TZ=Europe/Oslo --name adminer --publish 127.0.0.1:8082:8080 --restart always --detach --link mysql:db adminer

@@ -20,7 +20,7 @@ rm -rf {{hunnor_directory_apps}}/admin-rails/tmp/pids
 rm -rf {{hunnor_directory_apps}}/admin-rails/tmp/sessions
 rm -rf {{hunnor_directory_apps}}/admin-rails/tmp/sockets
 
-docker run --env TZ=Europe/Oslo --env-file {{hunnor_directory_apps}}/admin-rails/config/admin.env --name admin-rails --publish 3000:3000 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_data}}:/data --volume {{hunnor_directory_apps}}/admin-rails/logs:/opt/hunnor-dict/admin-rails/log --volume {{hunnor_directory_apps}}/admin-rails/tmp:/opt/hunnor-dict/admin-rails/tmp hunnordict/admin-rails
+docker run --env TZ=Europe/Oslo --env-file {{hunnor_directory_apps}}/admin-rails/config/admin.env --name admin-rails --publish 127.0.0.1:3000:3000 --restart always --detach --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_data}}:/data --volume {{hunnor_directory_apps}}/admin-rails/logs:/opt/hunnor-dict/admin-rails/log --volume {{hunnor_directory_apps}}/admin-rails/tmp:/opt/hunnor-dict/admin-rails/tmp hunnordict/admin-rails
 
 docker network connect mysql-net admin-rails
 docker network connect solr-net admin-rails

@@ -15,7 +15,7 @@
     image: hunnordict/word-trainer
     name: word-trainer
     published_ports:
-      - 8081:80
+      - 127.0.0.1:8081:80
     restart_policy: always
   become: yes
   become_user: "{{hunnor_user_name}}"

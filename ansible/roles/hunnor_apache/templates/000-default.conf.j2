@@ -3,9 +3,25 @@
     ServerSignature Off
 
     RewriteEngine On
+    RewriteCond %{REQUEST_URI} !(^/adminer|^/solr)
     RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
 
     ErrorLog ${APACHE_LOG_DIR}/redirect.error.log
     LogLevel warn
+
+    ProxyPass /adminer http://localhost:8082
+    ProxyPassReverse /adminer http://localhost:8082
+
+    ProxyPass /solr http://localhost:8983/solr
+    ProxyPassReverse /solr http://localhost:8983/solr
+
+    <LocationMatch "/adminer">
+        # Require ip 1.2.3.4
+        RequestHeader set X-Forwarded-Prefix "/adminer"
+    </LocationMatch>
+
+    <LocationMatch "/solr">
+        # Require ip 1.2.3.4
+    </LocationMatch>
 
 </VirtualHost>
