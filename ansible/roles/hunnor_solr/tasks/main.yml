@@ -18,8 +18,8 @@
 
 - docker_container:
     env:
-      HUNNOR_DUMP_FILE_HU: "data/{{hunnor_dump_hn}}"
-      HUNNOR_DUMP_FILE_NB:  "data/{{hunnor_dump_nh}}"
+      HUNNOR_DUMP_FILE_HU: "/data/{{hunnor_dump_hn}}"
+      HUNNOR_DUMP_FILE_NB:  "/data/{{hunnor_dump_nh}}"
       TZ: Europe/Oslo
     image: hunnordict/solr-cores
     name: solr-cores
@@ -27,7 +27,7 @@
       - 127.0.0.1:8983:8983
     restart_policy: always
     volumes:
-      - "{{hunnor_directory_data}}:/hunnor/data"
+      - "{{hunnor_directory_data}}:/data"
   become: yes
   become_user: "{{hunnor_user_name}}"
 
