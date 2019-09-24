@@ -1,0 +1,23 @@
+<IfModule mod_ssl.c>
+
+    <VirtualHost *:443>
+
+        ServerName dict-admin.hunnor.net
+        ServerAlias dict-admin
+
+        ServerAdmin {{hunnor_user_email}}
+
+        ErrorLog ${APACHE_LOG_DIR}/dict-admin.error.log
+        CustomLog ${APACHE_LOG_DIR}/dict-admin.access.log combined
+
+        ProxyPass / http://localhost:3000/
+        ProxyPassReverse / http://localhost:3000/
+
+        SSLCertificateFile /etc/letsencrypt/live/dict-admin.hunnor.net/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/dict-admin.hunnor.net/privkey.pem
+
+        Include /etc/letsencrypt/options-ssl-apache.conf
+
+    </VirtualHost>
+
+</IfModule>

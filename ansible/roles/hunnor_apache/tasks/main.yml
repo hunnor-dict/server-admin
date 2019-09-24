@@ -120,24 +120,13 @@
   become: yes
 
 - template:
-    dest: /etc/apache2/sites-available/001-hunnor-dict.conf
-    src: 001-hunnor-dict.conf.j2
+    dest: /etc/apache2/sites-available/002-dict-admin.hunnor.net.conf
+    src: 002-dict-admin.hunnor.net.conf.j2
   become: yes
 
 - file:
-    dest: /etc/apache2/sites-enabled/001-hunnor-dict.conf
-    src: /etc/apache2/sites-available/001-hunnor-dict.conf
-    state: link
-  become: yes
-
-- template:
-    dest: /etc/apache2/sites-available/002-hunnor-dict-admin.conf
-    src: 002-hunnor-dict-admin.conf.j2
-  become: yes
-
-- file:
-    dest: /etc/apache2/sites-enabled/002-hunnor-dict-admin.conf
-    src: /etc/apache2/sites-available/002-hunnor-dict-admin.conf
+    dest: /etc/apache2/sites-enabled/002-dict-admin.hunnor.net.conf
+    src: /etc/apache2/sites-available/002-dict-admin.hunnor.net.conf
     state: link
   become: yes
 
@@ -175,24 +164,13 @@
 #  become: yes
 
 - template:
-    dest: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
-    src: 101-hunnor-dict-ssl.conf.j2
+    dest: /etc/apache2/sites-available/102-dict-admin.hunnnor.net-ssl.conf
+    src: 102-dict-admin.hunnnor.net-ssl.conf.j2
   become: yes
 
 #- file:
-#    dest: /etc/apache2/sites-enabled/101-hunnor-dict-ssl.conf
-#    src: /etc/apache2/sites-available/101-hunnor-dict-ssl.conf
-#    state: link
-#  become: yes
-
-- template:
-    dest: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
-    src: 102-hunnor-dict-admin-ssl.conf.j2
-  become: yes
-
-#- file:
-#    dest: /etc/apache2/sites-enabled/102-hunnor-dict-admin-ssl.conf
-#    src: /etc/apache2/sites-available/102-hunnor-dict-admin-ssl.conf
+#    dest: /etc/apache2/sites-enabled/102-dict-admin.hunnnor.net-ssl.conf
+#    src: /etc/apache2/sites-available/102-dict-admin.hunnnor.net-ssl.conf
 #    state: link
 #  become: yes
 
