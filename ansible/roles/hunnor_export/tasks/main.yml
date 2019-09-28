@@ -72,6 +72,7 @@
     command: -Dbuild.dir=/data -lib /tools/export-lucene-1.0.0.jar export backup
     env:
       TZ: Europe/Oslo
+      WINEPREFIX: /data/.wine
     image: hunnordict/export-ant
     name: export-ant
     state: present
