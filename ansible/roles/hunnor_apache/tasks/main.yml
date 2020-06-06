@@ -164,13 +164,13 @@
 #  become: yes
 
 - template:
-    dest: /etc/apache2/sites-available/102-dict-admin.hunnnor.net-ssl.conf
-    src: 102-dict-admin.hunnnor.net-ssl.conf.j2
+    dest: /etc/apache2/sites-available/102-dict-admin.hunnor.net-ssl.conf
+    src: 102-dict-admin.hunnor.net-ssl.conf.j2
   become: yes
 
 #- file:
-#    dest: /etc/apache2/sites-enabled/102-dict-admin.hunnnor.net-ssl.conf
-#    src: /etc/apache2/sites-available/102-dict-admin.hunnnor.net-ssl.conf
+#    dest: /etc/apache2/sites-enabled/102-dict-admin.hunnor.net-ssl.conf
+#    src: /etc/apache2/sites-available/102-dict-admin.hunnor.net-ssl.conf
 #    state: link
 #  become: yes
 
