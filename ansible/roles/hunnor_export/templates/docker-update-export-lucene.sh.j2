@@ -13,4 +13,4 @@ fi
 
 docker rm export-lucene
 
-docker run --name export-lucene --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_tools}}:/tools hunnordict/export-lucene cp /opt/export-lucene/export-lucene-1.0.0.jar /tools/
+docker run --name export-lucene --user {{hunnor_user_id}}:{{hunnor_user_group_id}} --volume {{hunnor_directory_tools}}:/tools hunnordict/export-lucene cp -r /opt/export-lucene /tools/lucene
