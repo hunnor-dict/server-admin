@@ -34,8 +34,10 @@
         ProxyPass /data/HunNor-SQLite.sqlite3.md5 !
         Alias /data/HunNor-SQLite.sqlite3.md5 {{hunnor_directory_deploy}}/Public/Databases/HunNor-SQLite.sqlite3.md5
 
-        ProxyPass /grammar/verb http://localhost:8081/grammar/verb
-        ProxyPassReverse /grammar/verb http://localhost:8081/grammar/verb
+        RewriteEngine On
+        RewriteRule ^/grammar/verb$ https://dict.hunnor.net/grammar/verb/
+        ProxyPass /grammar/verb/ http://localhost:8081/
+        ProxyPassReverse /grammar/verb/ http://localhost:8081/
 
         ProxyPass / http://localhost:8080/
         ProxyPassReverse / http://localhost:8080/

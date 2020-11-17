@@ -12,8 +12,8 @@
 - docker_container:
     env:
       TZ: Europe/Oslo
-    image: hunnordict/word-trainer
-    name: word-trainer
+    image: hunnordict/words-vue
+    name: words-vue
     published_ports:
       - 127.0.0.1:8081:80
     restart_policy: always
@@ -25,5 +25,5 @@
     group: "{{hunnor_user_group}}"
     mode: u=rwx,g=rx,o=rx
     owner: "{{hunnor_user_name}}"
-    src: docker-update-word-trainer.sh
+    src: docker-update-words-vue.sh
   become: yes
