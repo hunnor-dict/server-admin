@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+
+  solr-cores:
+    environment:
+      HUNNOR_DUMP_FILE_HU: /hunnor/HunNor-XML-HN.xml
+      HUNNOR_DUMP_FILE_NB: /hunnor/HunNor-XML-NH.xml
+    image: hunnordict/solr-cores
+    ports:
+      - "8983:8983"
+    volumes:
+      - ../workspace:/hunnor
+
+#  admin-rails:
+#    image: admin-rails
+#    ports:
+#      - "3000:3000"
+#    env_file:
+#      - admin-rails/admin.env
+
+  mysql:
+    build: mysql
+    env_file:
+      - mysql/mysql.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/server:/etc/mysql/conf.d"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/sql:/sql"
+      - "../workspace:/data"
+
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+
+#  admin-spring:
+#    image: "hunnordict/admin-spring"
+#    ports:
+#      - "8083:8080"
+
+  downloader:
+    build: downloader
+    environment:
+      TZ: Europe/Oslo
+    volumes:
+      - ../workspace:/data
