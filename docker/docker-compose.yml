@@ -46,4 +46,6 @@ services:
     environment:
       TZ: Europe/Oslo
     volumes:
+      - ./downloader:/ant
       - ../workspace:/data
+      - ../workspace/ordbank:/docs

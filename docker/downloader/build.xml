@@ -1,59 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." name="ordbank" default="deploy">
+<project name="ordbank" default="bm">
 
-	<description>Download, extract and patch files from Norsk ordbank</description>
+	<description>Download and extract files from Norsk ordbank</description>
 
-	<property name="build.dir" location="/build"/>
-	<property name="target.dir" location="/data"/>
+	<property name="data.dir" location="/data"/>
+	<property name="docs.dir" location="/docs"/>
 
-	<property name="ordbank.url" value="https://www.nb.no/sbfil/leksikalske_databaser/ordbank/20190123_norsk_ordbank_nob_2005.tar.gz"/>
-	<property name="ordbank.file" value="Norsk_ordbank_nob_2005"/>
-	<property name="ordbank.dir" value="20190123_Norsk_ordbank_nob_2005"/>
+	<property name="pdf.url" value="https://www.nb.no/sbfil/leksikalske_databaser/ordbank/norsk_ordbank.pdf"/>
+	<property name="bm.tar.url" value="https://www.nb.no/sbfil/leksikalske_databaser/ordbank/20191010_norsk_ordbank_nob_2005.tar.gz"/>
+	<property name="bm.tar.file" value="20191010_norsk_ordbank_nob_2005"/>
 
-	<property name="ordbank.encoding" value="ISO-8859-1"/>
-	<property name="output.encoding" value="UTF-8"/>
+	<property name="source.encoding" value="ISO-8859-1"/>
+	<property name="target.encoding" value="UTF-8"/>
 
-	<property name="tab" value="&#x0009;"/>
-	<property name="rn" value="&#x000D;&#x000A;"/>
-
-	<target name="prepare">
-		<mkdir dir="${build.dir}"/>
+	<target name="download.pdf">
+		<get src="${pdf.url}" dest="${docs.dir}" skipexisting="true"/>
 	</target>
 
-	<target name="download" depends="prepare">
-		<get dest="${build.dir}/${ordbank.file}.tar.gz" skipexisting="true" src="${ordbank.url}"/>
+	<target name="download.bm.tar">
+		<get src="${bm.tar.url}" dest="${data.dir}/${bm.tar.file}.tar.gz" skipexisting="true"/>
 	</target>
 
-	<target name="extract" depends="download">
-		<untar compression="gzip" dest="${build.dir}" src="${build.dir}/${ordbank.file}.tar.gz"/>
-		<delete file="${build.dir}/${ordbank.file}.tar"/>
+	<target name="bm.extract" depends="download.bm.tar">
+		<untar src="${data.dir}/${bm.tar.file}.tar.gz" dest="${data.dir}/bm" compression="gzip" overwrite="false"/>
 	</target>
 
-	<target name="patch" depends="extract">
+	<target name="bm.sort" depends="bm.extract">
+	</target>
 
-		<!-- Remove binding from lemma 159286 to paradigms 700 and 900 (lemma ID is missing from both LEMMA and FULLFORMSLISTE) -->
-		<copy encoding="${ordbank.encoding}" file="${build.dir}/${ordbank.dir}/lemma_paradigme.txt" outputencoding="${ordbank.encoding}" tofile="${build.dir}/${ordbank.dir}/lemma_paradigme.new">
-			<filterchain>
-				<linecontainsregexp negate="true">
-					<regexp pattern="\t159286\t"/>
-				</linecontainsregexp>
-			</filterchain>
+	<target name="bm.recode" depends="bm.sort">
+		<copy encoding="${source.encoding}" outputencoding="${target.encoding}" todir="${data.dir}">
+			<fileset dir="${data.dir}/bm" includes="*.txt"/>
 		</copy>
-		<delete file="${build.dir}/${ordbank.dir}/lemma_paradigme.txt"/>
-		<move file="${build.dir}/${ordbank.dir}/lemma_paradigme.new" tofile="${build.dir}/${ordbank.dir}/lemma_paradigme.txt"/>
-
-		<!-- Add paradigm 810 to lemma 'gatebarn' -->
-		<echo file="${build.dir}/${ordbank.dir}/lemma_paradigme.txt" append="true">245205${tab}102229${tab}810${tab}normert${tab}2018${tab}4000${tab}${rn}</echo>
-
-		<!-- Add paradigm 810 to lemma 'skriftebarn' -->
-		<echo file="${build.dir}/${ordbank.dir}/lemma_paradigme.txt" append="true">245206${tab}139629${tab}810${tab}normert${tab}2018${tab}4000${tab}${rn}</echo>
-
 	</target>
 
-	<target name="deploy" depends="patch">
-		<copy encoding="${ordbank.encoding}" outputencoding="${output.encoding}" todir="${target.dir}">
-			<fileset dir="${build.dir}/${ordbank.dir}" includes="*.txt"/>
-		</copy>
+	<target name="clean">
+		<delete file="${data.dir}/${bm.tar.file}.tar.gz"/>
+	</target>
+
+	<target name="bm" depends="bm.recode,download.pdf">
 	</target>
 
 </project>
